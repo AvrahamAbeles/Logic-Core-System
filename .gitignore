@@ -1,14 +1,37 @@
-# .NET exclusions
+# ========================
+# .NET / C# Core
+# ========================
 bin/
 obj/
 .vs/
 *.user
+*.userosscache
+*.suo
+*.log
+TestResults/
 
-# Angular exclusions
+# User-specific files (Environment & Secrets)
+.env
+appsettings.Development.json
+secrets.json
+
+# ========================
+# Angular / Frontend
+# ========================
 node_modules/
 dist/
 .angular/
+.sass-cache/
+connect.lock
+coverage/
+lib/
+.idea/
+.vscode/
 
-# System
+# ========================
+# System / OS Files
+# ========================
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini

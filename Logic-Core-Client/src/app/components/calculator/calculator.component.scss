@@ -156,3 +156,22 @@ $success-color: #28a745;
     }
   }
 }
+
+.history-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 5px;
+
+  .op-name {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .equation {
+    direction: ltr; // המשוואה תמיד משמאל לימין, לא משנה מה
+    background: #f8f9fa;
+    padding: 2px 8px;
+    border-radius: 4px;
+    unicode-bidi: isolate; // מונע מהעברית "להדביק" את המספרים
+  }
+}

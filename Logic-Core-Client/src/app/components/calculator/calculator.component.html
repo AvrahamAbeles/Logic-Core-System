@@ -11,7 +11,7 @@
       <label>Operation</label>
       <select [ngModel]="selectedOp()" (ngModelChange)="selectedOp.set($event)">
         @for (op of operations(); track op.key) {
-          <option [value]="op.key">{{ op.displayName }}</option>
+          <option [value]="op.key">{{ op.symbol }}</option>
         }
       </select>
     </div>
@@ -38,14 +38,23 @@
         <p>Monthly Usage: {{ res.monthlyUsage }}</p>
         
         @if (res.historyLog?.length) {
-          <div class="history">
-            <h4>Last Operations:</h4>
-            <ul>
-              @for (log of res.historyLog; track $index) {
-                <li>{{ log }}</li>
-              }
-            </ul>
-          </div>
+
+
+         <div class="history">
+  <h4 >3 recent actions of this type:</h4>
+  <ul>
+    @for (log of res.historyLog; track $index) {
+      <li class="history-item">
+        <span class="op-name">{{ log.operationName }}:</span>
+        <span class="equation" dir="ltr">
+{{ log.inputA }} {{ log.symbol }} {{ log.inputB }} = {{ log.result }}        </span>
+      </li>
+    }
+  </ul>
+</div>
+
+
+
         }
       </div>
     </div>

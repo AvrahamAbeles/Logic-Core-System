@@ -1,64 +1,68 @@
-# Logic Core - Dynamic Banking Calculation Platform
+# Logic Core - Dynamic Calculation Platform
 
-A robust, extensible, and secure calculation platform designed for banking operations.
-This project demonstrates a decoupled architecture where the client (Frontend) is agnostic to the business logic residing on the server, allowing for dynamic extension of operations without client-side code changes.
+A robust, extensible, and secure calculation platform designed for high-stakes operations. This project demonstrates a decoupled architecture where the client (Frontend) is completely agnostic to the business logic. All calculation rules are managed on the server, allowing for dynamic extension without client-side code changes or redeployments.
 
 ## 🚀 Key Features
 
-* **Dynamic Operation Loading:** Uses **Strategy Pattern** and **Reflection** to load calculation logic at runtime. New operations can be added to the backend without redeploying or modifying the frontend.
-* **Modern Frontend:** Built with **Angular 18**, utilizing **Standalone Components**, **Signals** for reactive state management, and the new **Control Flow** syntax (`@if`, `@for`).
-* **Robust Backend:** **.NET 8 Web API** with Clean Architecture principles.
-* **Persistence:** SQL Server database integration using **Entity Framework Core (Code First)** for auditing and historical analysis (Bonus requirement).
-* **Security:** Input validation and secure API endpoints.
+* **Dynamic Formula Engine:** Utilizes DynamicExpresso to evaluate complex mathematical expressions stored in the database at runtime. This allows the to add new products (e.g., Tax, Interest, Commissions) by simply updating a database record.
+* **Audit & Analytics (Bonus):** Integrated Calculation Logs that track every operation, providing real-time "Monthly Usage" statistics and "Recent History" per operation type.
+* **Modern Frontend:** Built with Angular 18, utilizing Standalone Components, Signals for reactive state management, and the new Control Flow syntax (@if, @for).
+* **Robust Backend:** .NET 8 Web API following Clean Architecture principles and utilizing Dependency Injection.
+* **Persistence:** SQL Server database integration using Entity Framework Core (Code First) with automated migrations.
 
 ## 🛠 Tech Stack
 
 ### Client Side (Frontend)
-* **Framework:** Angular 18
-* **Architecture:** Standalone Components (No Modules)
+* **Framework:** Angular 18 (Standalone)
 * **State Management:** Angular Signals
-* **Styling:** SCSS with Flexbox/Grid
-* **Communication:** HttpClient
+* **Styling:** SCSS (Flexbox/Grid)
+* **Communication:** HttpClient with RxJS
 
 ### Server Side (Backend)
 * **Framework:** .NET 8 Web API
-* **Language:** C#
+* **Engine:** DynamicExpresso (Expression Evaluation)
 * **Database:** Microsoft SQL Server
 * **ORM:** Entity Framework Core
-* **Logging:** Serilog (Structured Logging)
-* **Validation:** FluentValidation
+* **Middleware:** Custom Exception Handling & CORS
 
-## 🏗 Architecture & Design Patterns
+## 🏗 Architecture & Design Principles
 
-The solution adheres to the **Open/Closed Principle**:
-1.  **Strategy Pattern:** Each mathematical operation (Add, Subtract, etc.) is encapsulated in its own class implementing a common `ICalculationOperation` interface.
-2.  **Factory/Reflection:** The server dynamically discovers all available operations at startup and exposes them via API.
-3.  **Thin Client:** The Angular client fetches the metadata of available operations (Name, Key) and renders the UI dynamically. It does not contain hard-coded business logic.
+The solution is a textbook implementation of the Open/Closed Principle:
+
+* **Expression Evaluation Pattern:** Instead of hard-coded Strategy classes, the server acts as a dynamic evaluator. It fetches the formula $f(arg1, arg2)$ from the DB and computes the result for any given inputs.
+* **Metadata-Driven UI:** The Angular client fetches available operations (Name, Key, Symbol) from the API and renders the UI dynamically.
+* **Data Persistence & History:** Every calculation is persisted in the CalculationLogs table, enabling historical tracking and usage limits.
 
 ## ⚙️ Getting Started
 
 ### Prerequisites
 * Node.js (v18+)
 * .NET 8 SDK
-* SQL Server (LocalDB or Express)
+* SQL Server (LocalDB)
 
 ### 1. Database Setup
-The project uses EF Core Code First.
-```bash
+* Update the connection string in `appsettings.json`  and run:
+ ```bash
 cd Logic-Core-Server
 dotnet ef database update
-cd Logic-Core-Server
-dotnet run
+```
+### 2. Run the Backend
+```bash
+dotnet run 
+```
 
+### 3. Run the Frontend 
+```bash
 cd Logic-Core-Client
 npm install
 ng serve --o
+```
 
-Usage
-Select an operation from the dynamically loaded dropdown.
+### Dynamic Logic Example
+The engine can evaluate any valid C# expression stored as a string:
 
-Enter values for Field A and Field B.
+**Add**: `arg1 + arg2`
 
-Click Calculate.
+**Tax Calculation**: `arg1 * 0.17`
 
-View the result along with historical usage statistics (Bonus Feature).
+**Complex Interest**: `arg1 * Math.Pow(1 + arg2, 12)`

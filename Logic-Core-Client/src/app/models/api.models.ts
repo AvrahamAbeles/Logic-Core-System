@@ -1,6 +1,7 @@
 export interface Operation {
   key: string;
-  displayName: string;
+  name: string;
+  symbol: string;
 }
 
 export interface CalculationRequest {
@@ -11,6 +12,13 @@ export interface CalculationRequest {
 
 export interface CalculationResult {
   value: number;
-  historyLog?: string[]; 
+  historyLog?: HistoryLogEntry[];
   monthlyUsage?: number;
+}
+export interface HistoryLogEntry {
+  operationName: string;
+  symbol: string;
+  inputA: number;
+  inputB: number;
+  result: number;
 }
