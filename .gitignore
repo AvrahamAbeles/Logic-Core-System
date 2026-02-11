@@ -1,0 +1,14 @@
+# .NET exclusions
+bin/
+obj/
+.vs/
+*.user
+
+# Angular exclusions
+node_modules/
+dist/
+.angular/
+
+# System
+.DS_Store
+Thumbs.db
