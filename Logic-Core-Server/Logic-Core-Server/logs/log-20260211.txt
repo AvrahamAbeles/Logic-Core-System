@@ -13,3 +13,153 @@
 2026-02-11 21:58:01.734 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7164/swagger/v1/swagger.json - null null
 2026-02-11 21:58:01.749 +02:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 6.9431 ms
 2026-02-11 21:58:01.754 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7164/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 21.0699ms
+2026-02-11 21:59:33.801 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7164/api/Calculator/operations - null null
+2026-02-11 21:59:33.831 +02:00 [INF] CORS policy execution successful.
+2026-02-11 21:59:33.836 +02:00 [INF] Executing endpoint 'Logic_Core_Server.Controllers.CalculatorController.GetOperations (Logic-Core-Server)'
+2026-02-11 21:59:33.871 +02:00 [INF] Route matched with {action = "GetOperations", controller = "Calculator"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetOperations() on controller Logic_Core_Server.Controllers.CalculatorController (Logic-Core-Server).
+2026-02-11 21:59:35.835 +02:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [o].[Key], [o].[Formula], [o].[IsActive], [o].[Name], [o].[Symbol]
+FROM [Operations] AS [o]
+WHERE [o].[IsActive] = CAST(1 AS bit)
+2026-02-11 21:59:35.903 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Logic_Core_Server.Data.Entities.OperationType, Logic-Core-Server, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-02-11 21:59:35.915 +02:00 [INF] Executed action Logic_Core_Server.Controllers.CalculatorController.GetOperations (Logic-Core-Server) in 2037.3792ms
+2026-02-11 21:59:35.919 +02:00 [INF] Executed endpoint 'Logic_Core_Server.Controllers.CalculatorController.GetOperations (Logic-Core-Server)'
+2026-02-11 21:59:35.921 +02:00 [INF] HTTP GET /api/Calculator/operations responded 200 in 2101.9569 ms
+2026-02-11 21:59:35.930 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7164/api/Calculator/operations - 200 null application/json; charset=utf-8 2129.5007ms
+2026-02-11 21:59:40.730 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7164/api/Calculator/calculate - null null
+2026-02-11 21:59:40.735 +02:00 [INF] CORS policy execution successful.
+2026-02-11 21:59:40.738 +02:00 [INF] HTTP OPTIONS /api/Calculator/calculate responded 204 in 3.7697 ms
+2026-02-11 21:59:40.742 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7164/api/Calculator/calculate - 204 null null 11.0879ms
+2026-02-11 21:59:40.745 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7164/api/Calculator/calculate - application/json 40
+2026-02-11 21:59:40.749 +02:00 [INF] CORS policy execution successful.
+2026-02-11 21:59:40.750 +02:00 [INF] Executing endpoint 'Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server)'
+2026-02-11 21:59:40.758 +02:00 [INF] Route matched with {action = "Calculate", controller = "Calculator"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Calculate(Logic_Core_Server.Core.DTOs.CalculationRequest) on controller Logic_Core_Server.Controllers.CalculatorController (Logic-Core-Server).
+2026-02-11 21:59:41.147 +02:00 [INF] Executed DbCommand (21ms) [Parameters=[@__operationKey_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [o].[Key], [o].[Formula], [o].[IsActive], [o].[Name], [o].[Symbol]
+FROM [Operations] AS [o]
+WHERE [o].[Key] = @__operationKey_0 AND [o].[IsActive] = CAST(1 AS bit)
+2026-02-11 21:59:41.241 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (DbType = Double), @p2='?' (DbType = Double), @p3='?' (Size = 4000), @p4='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [CalculationLogs] ([CreatedAt], [InputA], [InputB], [OperationKey], [Result])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2026-02-11 21:59:41.282 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__operationKey_0='?' (Size = 4000), @__startOfMonth_1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [CalculationLogs] AS [c]
+WHERE [c].[OperationKey] = @__operationKey_0 AND [c].[CreatedAt] >= @__startOfMonth_1
+2026-02-11 21:59:41.298 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__operation_Name_3='?' (Size = 4000), @__operation_Symbol_4='?' (Size = 4000), @__operationKey_0='?' (Size = 4000), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT @__operation_Name_3 AS [OperationName], @__operation_Symbol_4 AS [Symbol], [c].[InputA], [c].[InputB], [c].[Result]
+FROM [CalculationLogs] AS [c]
+WHERE [c].[OperationKey] = @__operationKey_0
+ORDER BY [c].[CreatedAt] DESC
+OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+2026-02-11 21:59:41.304 +02:00 [INF] Executing OkObjectResult, writing value of type 'Logic_Core_Server.Core.DTOs.CalculationResponse'.
+2026-02-11 21:59:41.319 +02:00 [INF] Executed action Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server) in 558.7829ms
+2026-02-11 21:59:41.322 +02:00 [INF] Executed endpoint 'Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server)'
+2026-02-11 21:59:41.323 +02:00 [INF] HTTP POST /api/Calculator/calculate responded 200 in 574.5820 ms
+2026-02-11 21:59:41.325 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7164/api/Calculator/calculate - 200 null application/json; charset=utf-8 580.927ms
+2026-02-11 21:59:51.416 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7164/api/Calculator/calculate - null null
+2026-02-11 21:59:51.421 +02:00 [INF] CORS policy execution successful.
+2026-02-11 21:59:51.423 +02:00 [INF] HTTP OPTIONS /api/Calculator/calculate responded 204 in 1.8589 ms
+2026-02-11 21:59:51.426 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7164/api/Calculator/calculate - 204 null null 10.0379ms
+2026-02-11 21:59:51.428 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7164/api/Calculator/calculate - application/json 40
+2026-02-11 21:59:51.434 +02:00 [INF] CORS policy execution successful.
+2026-02-11 21:59:51.435 +02:00 [INF] Executing endpoint 'Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server)'
+2026-02-11 21:59:51.436 +02:00 [INF] Route matched with {action = "Calculate", controller = "Calculator"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Calculate(Logic_Core_Server.Core.DTOs.CalculationRequest) on controller Logic_Core_Server.Controllers.CalculatorController (Logic-Core-Server).
+2026-02-11 21:59:51.485 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[@__operationKey_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [o].[Key], [o].[Formula], [o].[IsActive], [o].[Name], [o].[Symbol]
+FROM [Operations] AS [o]
+WHERE [o].[Key] = @__operationKey_0 AND [o].[IsActive] = CAST(1 AS bit)
+2026-02-11 21:59:51.494 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (DbType = Double), @p2='?' (DbType = Double), @p3='?' (Size = 4000), @p4='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [CalculationLogs] ([CreatedAt], [InputA], [InputB], [OperationKey], [Result])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2026-02-11 21:59:51.499 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__operationKey_0='?' (Size = 4000), @__startOfMonth_1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [CalculationLogs] AS [c]
+WHERE [c].[OperationKey] = @__operationKey_0 AND [c].[CreatedAt] >= @__startOfMonth_1
+2026-02-11 21:59:51.506 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__operation_Name_3='?' (Size = 4000), @__operation_Symbol_4='?' (Size = 4000), @__operationKey_0='?' (Size = 4000), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT @__operation_Name_3 AS [OperationName], @__operation_Symbol_4 AS [Symbol], [c].[InputA], [c].[InputB], [c].[Result]
+FROM [CalculationLogs] AS [c]
+WHERE [c].[OperationKey] = @__operationKey_0
+ORDER BY [c].[CreatedAt] DESC
+OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+2026-02-11 21:59:51.509 +02:00 [INF] Executing OkObjectResult, writing value of type 'Logic_Core_Server.Core.DTOs.CalculationResponse'.
+2026-02-11 21:59:51.511 +02:00 [INF] Executed action Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server) in 71.2134ms
+2026-02-11 21:59:51.513 +02:00 [INF] Executed endpoint 'Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server)'
+2026-02-11 21:59:51.514 +02:00 [INF] HTTP POST /api/Calculator/calculate responded 200 in 80.2962 ms
+2026-02-11 21:59:51.516 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7164/api/Calculator/calculate - 200 null application/json; charset=utf-8 88.5401ms
+2026-02-11 22:00:10.938 +02:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7164/api/Calculator/calculate - null null
+2026-02-11 22:00:10.944 +02:00 [INF] CORS policy execution successful.
+2026-02-11 22:00:10.946 +02:00 [INF] HTTP OPTIONS /api/Calculator/calculate responded 204 in 1.9307 ms
+2026-02-11 22:00:10.949 +02:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7164/api/Calculator/calculate - 204 null null 11.4738ms
+2026-02-11 22:00:10.952 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7164/api/Calculator/calculate - application/json 38
+2026-02-11 22:00:10.961 +02:00 [INF] CORS policy execution successful.
+2026-02-11 22:00:10.963 +02:00 [INF] Executing endpoint 'Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server)'
+2026-02-11 22:00:10.965 +02:00 [INF] Route matched with {action = "Calculate", controller = "Calculator"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Calculate(Logic_Core_Server.Core.DTOs.CalculationRequest) on controller Logic_Core_Server.Controllers.CalculatorController (Logic-Core-Server).
+2026-02-11 22:00:10.975 +02:00 [INF] Executed DbCommand (4ms) [Parameters=[@__operationKey_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [o].[Key], [o].[Formula], [o].[IsActive], [o].[Name], [o].[Symbol]
+FROM [Operations] AS [o]
+WHERE [o].[Key] = @__operationKey_0 AND [o].[IsActive] = CAST(1 AS bit)
+2026-02-11 22:00:10.998 +02:00 [ERR] Failed executing DbCommand (11ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (DbType = Double), @p2='?' (DbType = Double), @p3='?' (Size = 4000), @p4='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [CalculationLogs] ([CreatedAt], [InputA], [InputB], [OperationKey], [Result])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2026-02-11 22:00:11.060 +02:00 [ERR] An exception occurred in the database while saving changes for context type 'Logic_Core_Server.Data.Context.AppDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The incoming tabular data stream (TDS) remote procedure call (RPC) protocol stream is incorrect. Parameter 7 ("@p4"): The supplied value is not a valid instance of data type float. Check the source data for invalid values. An example of an invalid value is data of numeric type with scale greater than precision.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:73320171-1f10-42b7-9f6c-5d1f1b73510b
+Error Number:8023,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The incoming tabular data stream (TDS) remote procedure call (RPC) protocol stream is incorrect. Parameter 7 ("@p4"): The supplied value is not a valid instance of data type float. Check the source data for invalid values. An example of an invalid value is data of numeric type with scale greater than precision.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:73320171-1f10-42b7-9f6c-5d1f1b73510b
+Error Number:8023,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-02-11 22:00:11.231 +02:00 [INF] Executed action Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server) in 263.6222ms
+2026-02-11 22:00:11.236 +02:00 [INF] Executed endpoint 'Logic_Core_Server.Controllers.CalculatorController.Calculate (Logic-Core-Server)'
+2026-02-11 22:00:11.344 +02:00 [ERR] HTTP POST /api/Calculator/calculate responded 500 in 383.1905 ms
+2026-02-11 22:00:11.348 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7164/api/Calculator/calculate - 500 null application/json 396.9087ms

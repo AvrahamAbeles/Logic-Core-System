@@ -29,7 +29,12 @@
       }
     </button>
   </div>
-
+@if (errorMessage()) {
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <div class="error-text">{{ errorMessage() }}</div>
+  </div>
+}
   @if (result(); as res) {
     <div class="result-box">
       <h2>Result: {{ res.value }}</h2>
