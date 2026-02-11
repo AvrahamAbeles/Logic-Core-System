@@ -1,0 +1,53 @@
+<div class="container">
+  <h1>Calculator</h1>
+
+  <div class="form-grid">
+    <div class="group">
+      <label>Field A</label>
+      <input type="number" [ngModel]="fieldA()" (ngModelChange)="fieldA.set($event)">
+    </div>
+
+    <div class="group">
+      <label>Operation</label>
+      <select [ngModel]="selectedOp()" (ngModelChange)="selectedOp.set($event)">
+        @for (op of operations(); track op.key) {
+          <option [value]="op.key">{{ op.displayName }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="group">
+      <label>Field B</label>
+      <input type="number" [ngModel]="fieldB()" (ngModelChange)="fieldB.set($event)">
+    </div>
+
+    <button (click)="onCalculate()" [disabled]="isLoading()">
+      @if (isLoading()) {
+        Processing...
+      } @else {
+        Calculate
+      }
+    </button>
+  </div>
+
+  @if (result(); as res) {
+    <div class="result-box">
+      <h2>Result: {{ res.value }}</h2>
+      
+      <div class="bonus-info">
+        <p>Monthly Usage: {{ res.monthlyUsage }}</p>
+        
+        @if (res.historyLog?.length) {
+          <div class="history">
+            <h4>Last Operations:</h4>
+            <ul>
+              @for (log of res.historyLog; track $index) {
+                <li>{{ log }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
