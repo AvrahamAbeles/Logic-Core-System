@@ -4,11 +4,13 @@ A robust, extensible, and secure calculation platform designed for high-stakes o
 
 ## 🚀 Key Features
 
-* **Dynamic Formula Engine:** Utilizes DynamicExpresso to evaluate complex mathematical expressions stored in the database at runtime. This allows the to add new products (e.g., Tax, Interest, Commissions) by simply updating a database record.
-* **Audit & Analytics (Bonus):** Integrated Calculation Logs that track every operation, providing real-time "Monthly Usage" statistics and "Recent History" per operation type.
-* **Modern Frontend:** Built with Angular 18, utilizing Standalone Components, Signals for reactive state management, and the new Control Flow syntax (@if, @for).
-* **Robust Backend:** .NET 8 Web API following Clean Architecture principles and utilizing Dependency Injection.
-* **Persistence:** SQL Server database integration using Entity Framework Core (Code First) with automated migrations.
+* **Dynamic Formula Engine:** Utilizes **DynamicExpresso** to evaluate complex mathematical expressions stored in the database at runtime. This allows adding new products (e.g., Tax, Interest, Commissions) by simply updating a database record.
+* **Security & Resilience:** Implemented **Rate Limiting** middleware to prevent DDoS attacks and ensure fair usage of server resources.
+* **Observability:** Integrated structured logging with **Serilog** (File/Console sinks) for advanced debugging and production-grade monitoring.
+* **Audit & Analytics (Bonus):** Integrated **Calculation Logs** that track every operation, providing real-time "Monthly Usage" statistics and "Recent History" per operation type.
+* **Modern Frontend:** Built with **Angular 18**, utilizing **Standalone Components**, **Signals** for reactive state management, and the new **Control Flow** syntax (`@if`, `@for`).
+* **Robust Backend:** **.NET 8 Web API** following Clean Architecture principles and utilizing Dependency Injection.
+* **Persistence:** SQL Server database integration using **Entity Framework Core (Code First)** with automated migrations.
 
 ## 🛠 Tech Stack
 

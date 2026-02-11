@@ -1,10 +1,15 @@
 using Logic_Core_Server.Core.Interfaces;
 using Logic_Core_Server.Data.Context;
+using Logic_Core_Server.Extensions;
 using Logic_Core_Server.Middleware;
 using Logic_Core_Server.Services;
 using Microsoft.EntityFrameworkCore;
-
+using Serilog;
+using Logic_Core_Server.Extensions;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRateLimitingConfiguration();
+builder.AddSerilogConfiguration();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -29,7 +34,10 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+app.UseSerilogRequestLogging();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseRateLimiter();
+app.MapControllers().RequireRateLimiting("fixed");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
