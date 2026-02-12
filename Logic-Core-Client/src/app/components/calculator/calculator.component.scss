@@ -168,22 +168,22 @@ $success-color: #28a745;
   }
 
   .equation {
-    direction: ltr; // המשוואה תמיד משמאל לימין, לא משנה מה
+    direction: ltr; 
     background: #f8f9fa;
     padding: 2px 8px;
     border-radius: 4px;
-    unicode-bidi: isolate; // מונע מהעברית "להדביק" את המספרים
+    unicode-bidi: isolate; 
   }
 }
 
 .error-container {
   margin-top: 1rem;
   padding: 1rem;
-  background-color: #fef2f2; // אדום בהיר מאוד לרקע
+  background-color: #fef2f2; 
   border: 1px solid #fee2e2;
-  border-left: 4px solid #ef4444; // פס אדום בצד
+  border-left: 4px solid #ef4444; 
   border-radius: 6px;
-  color: #b91c1c; // טקסט אדום כהה
+  color: #b91c1c; 
   display: flex;
   align-items: center;
   gap: 10px;
@@ -198,7 +198,6 @@ $success-color: #28a745;
   }
 }
 
-// אנימציה קטנה לכניסה חלקה
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }

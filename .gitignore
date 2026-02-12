@@ -9,7 +9,9 @@ obj/
 *.suo
 *.log
 TestResults/
-
+# Logs
+logs/
+*.log
 # User-specific files (Environment & Secrets)
 .env
 appsettings.Development.json

@@ -11,7 +11,7 @@
       <label>Operation</label>
       <select [ngModel]="selectedOp()" (ngModelChange)="selectedOp.set($event)">
         @for (op of operations(); track op.key) {
-          <option [value]="op.key">{{ op.symbol }}</option>
+        <option [value]="op.key">{{ op.symbol }}</option>
         }
       </select>
     </div>
@@ -23,45 +23,45 @@
 
     <button (click)="onCalculate()" [disabled]="isLoading()">
       @if (isLoading()) {
-        Processing...
+      Processing...
       } @else {
-        Calculate
+      Calculate
       }
     </button>
   </div>
-@if (errorMessage()) {
+  @if (errorMessage()) {
   <div class="error-container">
     <div class="error-icon">⚠️</div>
     <div class="error-text">{{ errorMessage() }}</div>
   </div>
-}
+  }
   @if (result(); as res) {
-    <div class="result-box">
-      <h2>Result: {{ res.value }}</h2>
-      
-      <div class="bonus-info">
-        <p>Monthly Usage: {{ res.monthlyUsage }}</p>
-        
-        @if (res.historyLog?.length) {
+  <div class="result-box">
+    <h2>Result: {{ res.value }}</h2>
+
+    <div class="bonus-info">
+      <p>Monthly Usage: {{ res.monthlyUsage }}</p>
+
+      @if (res.historyLog?.length) {
 
 
-         <div class="history">
-  <h4 >3 recent actions of this type:</h4>
-  <ul>
-    @for (log of res.historyLog; track $index) {
-      <li class="history-item">
-        <span class="op-name">{{ log.operationName }}:</span>
-        <span class="equation" dir="ltr">
-{{ log.inputA }} {{ log.symbol }} {{ log.inputB }} = {{ log.result }}        </span>
-      </li>
-    }
-  </ul>
-</div>
-
-
-
-        }
+      <div class="history">
+        <h4>3 recent actions of this type:</h4>
+        <ul>
+          @for (log of res.historyLog; track $index) {
+          <li class="history-item">
+            <span class="op-name">{{ log.operationName }}:</span>
+            <span class="equation" dir="ltr">
+              {{ log.inputA }} {{ log.symbol }} {{ log.inputB }} = {{ log.result }} </span>
+          </li>
+          }
+        </ul>
       </div>
+
+
+
+      }
     </div>
+  </div>
   }
 </div>

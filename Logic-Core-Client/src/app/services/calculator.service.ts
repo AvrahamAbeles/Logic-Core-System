@@ -1,7 +1,7 @@
 import { Injectable ,inject} from '@angular/core';
 import { HttpClient } from '@angular/common/http'; // לשימוש עתידי
 import { Observable, delay, of } from 'rxjs';
-import { CalculationResult, Operation } from '../models/api.models';
+import { CalculationRequest, CalculationResult, Operation } from '../models/api.models';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,10 +18,12 @@ export class CalculatorService {
    return this.http.get<Operation[]>(`${this.apiUrl}/operations`);
   }
 
-  // מדמה חישוב (POST /api/calculate)
-  calculate(a: number, b: number, action: string): Observable<CalculationResult> {
-    
-    const body = { fieldA: a, fieldB: b, action };
+  calculate(calculationRequest : CalculationRequest): Observable<CalculationResult> {
+    const body = {
+      fieldA: calculationRequest.fieldA,
+      fieldB: calculationRequest.fieldB,
+      action: calculationRequest.action 
+    };
     return this.http.post<CalculationResult>(`${this.apiUrl}/calculate`, body);
   }
 

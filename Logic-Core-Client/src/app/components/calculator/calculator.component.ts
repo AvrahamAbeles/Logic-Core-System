@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalculatorService } from '../../services/calculator.service';
-import { CalculationResult, Operation } from '../../models/api.models';
+import { CalculationResult ,CalculationRequest, Operation } from '../../models/api.models';
 
 @Component({
   selector: 'app-calculator',
@@ -17,6 +17,7 @@ export class CalculatorComponent implements OnInit {
   operations = signal<Operation[]>([]);
   isLoading = signal<boolean>(false);
   result = signal<CalculationResult | null>(null);
+
   errorMessage = signal<string | null>(null);
   fieldA = signal<number | null>(null);
   fieldB = signal<number | null>(null);
@@ -49,8 +50,12 @@ export class CalculatorComponent implements OnInit {
     this.isLoading.set(true);
     this.errorMessage.set(null);
     this.result.set(null);
-
-    this.calcService.calculate(a, b, op).subscribe({
+    const calculationRequest: CalculationRequest = {
+      fieldA: a,
+      fieldB: b,
+      action: op
+    };
+    this.calcService.calculate(calculationRequest ).subscribe({
       next: (res) => {
         this.result.set(res);
         this.isLoading.set(false);
@@ -59,9 +64,8 @@ export class CalculatorComponent implements OnInit {
         console.error(err);
         let msg = 'אירעה שגיאה בביצוע החישוב';
         if (err.error && typeof err.error === 'object') {
-          // אם השרת שלח הודעה מפורטת (כמו חילוק ב-0)
-          const serverError = err.error.error; // הכותרת בעברית
-          const serverMsg = err.error.message; // הפירוט באנגלית
+          const serverError = err.error.error; 
+          const serverMsg = err.error.message; 
           if (serverError && serverMsg) {
             msg = `${serverError}: ${serverMsg}`;
           } else if (serverMsg) {
