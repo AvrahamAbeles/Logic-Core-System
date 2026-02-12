@@ -7,10 +7,10 @@ obj/
 *.user
 *.userosscache
 *.suo
-*.log
+
 TestResults/
 # Logs
-logs/
+**/logs/
 *.log
 # User-specific files (Environment & Secrets)
 .env
