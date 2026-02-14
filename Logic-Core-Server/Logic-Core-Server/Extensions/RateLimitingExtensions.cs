@@ -9,16 +9,14 @@ namespace Logic_Core_Server.Extensions
         {
             services.AddRateLimiter(options =>
             {
-                // הגדרת מדיניות בשם "fixed"
                 options.AddFixedWindowLimiter("fixed", opt =>
                 {
-                    opt.Window = TimeSpan.FromSeconds(10); // חלון זמן של 10 שניות
-                    opt.PermitLimit = 10;                   // מקסימום 10 בקשות
-                    opt.QueueLimit = 5;                    // אם עמוס, שמור 2 בקשות בתור
+                    opt.Window = TimeSpan.FromSeconds(10); 
+                    opt.PermitLimit = 10;                   
+                    opt.QueueLimit = 5;                    
                     opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 });
 
-                // אפשר להוסיף כאן קוד טיפול בשגיאה (Rejection)
                 options.OnRejected = async (context, token) =>
                 {
                     context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;

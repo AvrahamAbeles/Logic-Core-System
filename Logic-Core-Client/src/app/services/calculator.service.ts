@@ -19,12 +19,8 @@ export class CalculatorService {
   }
 
   calculate(calculationRequest : CalculationRequest): Observable<CalculationResult> {
-    const body = {
-      fieldA: calculationRequest.fieldA,
-      fieldB: calculationRequest.fieldB,
-      action: calculationRequest.action 
-    };
-    return this.http.post<CalculationResult>(`${this.apiUrl}/calculate`, body);
+
+    return this.http.post<CalculationResult>(`${this.apiUrl}/calculate`, calculationRequest);
   }
 
 }

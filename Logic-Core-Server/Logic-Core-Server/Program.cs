@@ -2,44 +2,43 @@ using DynamicExpresso;
 using Logic_Core_Server.Core.Interfaces;
 using Logic_Core_Server.Data.Context;
 using Logic_Core_Server.Extensions;
-using Logic_Core_Server.Extensions;
 using Logic_Core_Server.Middleware;
 using Logic_Core_Server.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-var builder = WebApplication.CreateBuilder(args);
 
+
+var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRateLimitingConfiguration();
 builder.AddSerilogConfiguration();
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
-// Add services to the container.
-builder.Services.AddScoped<ICalculationService, DynamicCalculationService>();
+builder.Services.AddScoped<ICalculationService, CalculationService>();
+builder.Services.AddSingleton<Interpreter>();
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("TrustedFrontendOnly", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+         policy.WithOrigins("http://localhost:4200") 
+       // policy.AllowAnyOrigin()
+               .AllowAnyMethod()
+              .AllowAnyHeader()              
+              .AllowCredentials();               
     });
 });
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<Interpreter>();
-
 var app = builder.Build();
+
 app.UseSerilogRequestLogging();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseRateLimiter();
-app.MapControllers().RequireRateLimiting("fixed");
-// Configure the HTTP request pipeline.
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -47,9 +46,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+app.UseCors("TrustedFrontendOnly");
+app.UseRateLimiter();
 app.UseAuthorization();
-
-app.MapControllers();
+app.MapControllers().RequireRateLimiting("fixed");
 
 app.Run();

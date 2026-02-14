@@ -1,5 +1,4 @@
-﻿using Serilog;
-
+﻿
 namespace Logic_Core_Server.Extensions
 {
     public static class SerilogExtensions
