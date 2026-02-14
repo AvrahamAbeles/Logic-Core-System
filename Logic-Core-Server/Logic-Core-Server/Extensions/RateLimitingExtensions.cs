@@ -12,8 +12,8 @@ namespace Logic_Core_Server.Extensions
                 options.AddFixedWindowLimiter("fixed", opt =>
                 {
                     opt.Window = TimeSpan.FromSeconds(10); 
-                    opt.PermitLimit = 10;                   
-                    opt.QueueLimit = 5;                    
+                    opt.PermitLimit = 100;                   
+                    opt.QueueLimit = 50;                    
                     opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 });
 

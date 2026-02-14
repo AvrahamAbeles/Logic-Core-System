@@ -10,5 +10,4 @@ global using Logic_Core_Server.Services;
 global using Logic_Core_Server.Extensions;
 global using System.Net;
 global using Logic_Core_Server.Data.Entities;
-
 global using System.Text.Json;
