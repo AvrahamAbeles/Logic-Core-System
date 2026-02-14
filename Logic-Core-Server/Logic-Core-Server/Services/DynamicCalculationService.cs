@@ -9,10 +9,12 @@ namespace Logic_Core_Server.Services
     public class DynamicCalculationService : ICalculationService
     {
         private readonly AppDbContext _context;
+        private readonly Interpreter _interpreter;
 
-        public DynamicCalculationService(AppDbContext context)
+        public DynamicCalculationService(AppDbContext context ,Interpreter interpreter)
         {
             _context = context;
+            _interpreter = interpreter;
         }
 
         public async Task<CalculationResponse> CalculateAsync(string operationKey, double a, double b)
@@ -24,8 +26,8 @@ namespace Logic_Core_Server.Services
             if (operation == null) throw new Exception("פעולה לא נמצאה");
 
             // הפעלת מנוע החישוב הדינמי
-            var interpreter = new Interpreter();
-            double result = interpreter.Eval<double>(operation.Formula, new[] { new Parameter("arg1", a), new Parameter("arg2", b) }); await _context.SaveChangesAsync();
+            double result = _interpreter.Eval<double>(operation.Formula, new[] { new Parameter("arg1", a), new Parameter("arg2", b) }); await _context.SaveChangesAsync();
+
             // שמירת תיעוד ב-Logs
             _context.CalculationLogs.Add(new CalculationLog { OperationKey = operationKey, InputA = a, InputB = b, Result = result });
             await _context.SaveChangesAsync(); // כאן החישוב נכנס ל-DB

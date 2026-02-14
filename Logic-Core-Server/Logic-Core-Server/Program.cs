@@ -1,11 +1,12 @@
+using DynamicExpresso;
 using Logic_Core_Server.Core.Interfaces;
 using Logic_Core_Server.Data.Context;
+using Logic_Core_Server.Extensions;
 using Logic_Core_Server.Extensions;
 using Logic_Core_Server.Middleware;
 using Logic_Core_Server.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Logic_Core_Server.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRateLimitingConfiguration();
@@ -31,7 +32,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSingleton<Interpreter>();
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();
