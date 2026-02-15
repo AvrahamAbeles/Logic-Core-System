@@ -7,7 +7,9 @@ public class CalculatorController(ICalculationService calcService) : ControllerB
 {
     [HttpGet("operations")]
     public async Task<IActionResult> GetOperations()
-        => Ok(await calcService.GetAvailableOperationsAsync());
+    {
+        return Ok(await calcService.GetAvailableOperationsAsync());
+    }
 
     [HttpPost("calculate")]
     public async Task<IActionResult> Calculate([FromBody] CalculationRequest req)

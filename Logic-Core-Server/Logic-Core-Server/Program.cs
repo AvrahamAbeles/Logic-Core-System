@@ -1,11 +1,5 @@
 using DynamicExpresso;
-using Logic_Core_Server.Core.Interfaces;
-using Logic_Core_Server.Data.Context;
-using Logic_Core_Server.Extensions;
-using Logic_Core_Server.Middleware;
-using Logic_Core_Server.Services;
-using Microsoft.EntityFrameworkCore;
-using Serilog;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +16,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("TrustedFrontendOnly", policy =>
     {
          policy.WithOrigins("http://localhost:4200") 
-       // policy.AllowAnyOrigin()
                .AllowAnyMethod()
               .AllowAnyHeader()              
               .AllowCredentials();               

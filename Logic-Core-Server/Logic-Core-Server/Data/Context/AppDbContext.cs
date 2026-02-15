@@ -1,10 +1,5 @@
-﻿using Logic_Core_Server.Data.Entities;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using Microsoft.EntityFrameworkCore;
+﻿namespace Logic_Core_Server.Data.Context;
 
-namespace Logic_Core_Server.Data.Context
-{
     public class AppDbContext : DbContext
     {
 
@@ -47,4 +42,4 @@ namespace Logic_Core_Server.Data.Context
             );
         }
     }
-}
+

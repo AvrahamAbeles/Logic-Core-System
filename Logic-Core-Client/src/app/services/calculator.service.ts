@@ -19,7 +19,6 @@ export class CalculatorService {
   }
 
   calculate(calculationRequest : CalculationRequest): Observable<CalculationResult> {
-
     return this.http.post<CalculationResult>(`${this.apiUrl}/calculate`, calculationRequest);
   }
 
