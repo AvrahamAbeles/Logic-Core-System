@@ -20,15 +20,12 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
             if (ex is InvalidOperationException)
             {
                 statusCode = HttpStatusCode.BadRequest; 
+                errorTitle = "Bad Request";
                 message = ex.Message; 
             }
 
             context.Response.StatusCode = (int)statusCode;
-            var response = new
-            {
-                error = errorTitle,
-                message = message
-            };
+
             await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }

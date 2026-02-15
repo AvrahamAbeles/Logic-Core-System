@@ -6,9 +6,9 @@
 
         public string OperationKey { get; set; } 
 
-        public double InputA { get; set; }
-        public double InputB { get; set; }
-        public double Result { get; set; }
+        public string InputA { get; set; }
+        public string InputB { get; set; }
+        public string Result { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

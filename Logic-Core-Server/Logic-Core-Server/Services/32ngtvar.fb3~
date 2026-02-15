@@ -16,20 +16,19 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
         int monthlyCount = await GetMonthlyUsageCountAsync(operationKey);
 
         object result = ExecuteDynamicCalculation(operation.Formula, a, b);
-        string resultString = result?.ToString() ?? "";
 
         context.CalculationLogs.Add(new CalculationLog
         {
             OperationKey = operationKey,
             InputA = a,
             InputB = b,
-            Result = resultString
+            Result = result
         });
         await context.SaveChangesAsync();
 
         return new CalculationResponse
         {
-            Value = resultString,
+            Value = result,
             MonthlyUsage = monthlyCount,
             HistoryLog = lastThree
         };
@@ -58,7 +57,7 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
 
             else
             {
-                 return interpreter.Eval(formula, new[]
+=                return interpreter.Eval(formula, new[]
                  {
                     new Parameter("arg1", a),
                     new Parameter("arg2", b)
@@ -67,7 +66,8 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"לא ניתן לבצע את הפעולה  על הערכים שהוזנו" );
+            // טיפול בשגיאות (למשל: ניסיון לחסר מחרוזות)
+            throw new InvalidOperationException($"לא ניתן לבצע את הפעולה '{operation.Name}' על הערכים שהוזנו ({a}, {b})", ex);
         }
       
     }

@@ -67,7 +67,7 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"לא ניתן לבצע את הפעולה  על הערכים שהוזנו" );
+            throw new InvalidOperationException($"לא ניתן לבצע את הפעולה '{formula}' על הערכים שהוזנו ({a}, {b})", ex);
         }
       
     }

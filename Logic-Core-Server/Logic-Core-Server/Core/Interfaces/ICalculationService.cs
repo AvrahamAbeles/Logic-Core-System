@@ -2,7 +2,7 @@
 
     public interface ICalculationService
     {
-        Task<CalculationResponse> CalculateAsync(string operationKey, double a, double b);
+        Task<CalculationResponse> CalculateAsync(string operationKey, string a, string b);
         Task<List<OperationType>> GetAvailableOperationsAsync();
     }
 

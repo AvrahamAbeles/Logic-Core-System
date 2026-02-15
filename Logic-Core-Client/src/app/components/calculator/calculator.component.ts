@@ -19,8 +19,8 @@ export class CalculatorComponent implements OnInit {
   result = signal<CalculationResult | null>(null);
 
   errorMessage = signal<string | null>(null);
-  fieldA = signal<number | null>(null);
-  fieldB = signal<number | null>(null);
+  fieldA = signal<string >('');
+  fieldB = signal<string >('');
   selectedOp = signal<string>('');
 
   ngOnInit() {
@@ -45,7 +45,10 @@ export class CalculatorComponent implements OnInit {
     const b = this.fieldB();
     const op = this.selectedOp();
 
-    if (a === null || b === null || !op) return;
+    if (!a || !b || !op) {
+        this.errorMessage.set('Please fill all fields');
+        return;
+    }
 
     this.isLoading.set(true);
     this.errorMessage.set(null);
@@ -55,7 +58,7 @@ export class CalculatorComponent implements OnInit {
       fieldB: b,
       action: op
     };
-    this.calcService.calculate(calculationRequest ).subscribe({
+    this.calcService.calculate(calculationRequest).subscribe({
       next: (res) => {
         this.result.set(res);
         this.isLoading.set(false);

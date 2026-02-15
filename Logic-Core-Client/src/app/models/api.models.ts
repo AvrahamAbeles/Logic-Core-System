@@ -1,24 +1,26 @@
 export interface Operation {
   key: string;
   name: string;
+  formula: string;
   symbol: string;
+  isActive: boolean;
 }
 
 export interface CalculationRequest {
-  fieldA: number;
-  fieldB: number;
+  fieldA: string;
+  fieldB: string;
   action: string;
 }
 
 export interface CalculationResult {
-  value: number;
+  value: string;
   historyLog?: HistoryLogEntry[];
   monthlyUsage?: number;
 }
 export interface HistoryLogEntry {
   operationName: string;
   symbol: string;
-  inputA: number;
-  inputB: number;
-  result: number;
+  inputA: string;
+  inputB: string;
+  result: string;
 }

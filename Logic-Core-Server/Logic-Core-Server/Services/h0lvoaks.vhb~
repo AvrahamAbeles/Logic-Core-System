@@ -16,26 +16,25 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
         int monthlyCount = await GetMonthlyUsageCountAsync(operationKey);
 
         object result = ExecuteDynamicCalculation(operation.Formula, a, b);
-        string resultString = result?.ToString() ?? "";
 
         context.CalculationLogs.Add(new CalculationLog
         {
             OperationKey = operationKey,
             InputA = a,
             InputB = b,
-            Result = resultString
+            Result = result
         });
         await context.SaveChangesAsync();
 
         return new CalculationResponse
         {
-            Value = resultString,
+            Value = result,
             MonthlyUsage = monthlyCount,
             HistoryLog = lastThree
         };
     }
 
-    private object ExecuteDynamicCalculation(string formula, string a, string b)
+    private double ExecuteDynamicCalculation(object formula, string a, string b)
     {
         // שלב 1: ננסה לזהות אם מדובר במספרים
         bool isNumA = double.TryParse(a, out double valA);
@@ -46,30 +45,36 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
         {
             if (isNumA && isNumB)
             {
-
-                return interpreter.Eval(formula, new[]
-                {
+                // חישוב מתמטי (מספרים)
+                return interpreter.Eval(operation.Formula,
                     new Parameter("arg1", valA),
-                    new Parameter("arg2", valB)
-
-                });
-
+                    new Parameter("arg2", valB));
             }
-
+            else if (isBoolA && isBoolB)
+            {
+                // חישוב לוגי (בוליאני)
+                resultObj = interpreter.Eval(operation.Formula,
+                    new Parameter("arg1", valBoolA),
+                    new Parameter("arg2", valBoolB));
+            }
             else
             {
-                 return interpreter.Eval(formula, new[]
-                 {
+                // חישוב טקסטואלי (מחרוזות)
+                resultObj = interpreter.Eval(operation.Formula,
                     new Parameter("arg1", a),
-                    new Parameter("arg2", b)
-                 });
+                    new Parameter("arg2", b));
             }
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"לא ניתן לבצע את הפעולה  על הערכים שהוזנו" );
+            // טיפול בשגיאות (למשל: ניסיון לחסר מחרוזות)
+            throw new InvalidOperationException($"לא ניתן לבצע את הפעולה '{operation.Name}' על הערכים שהוזנו ({a}, {b})", ex);
         }
-      
+        return interpreter.Eval<double>(formula, new[]
+        {
+            new Parameter("arg1", a),
+            new Parameter("arg2", b)
+        });
     }
 
     private async Task<List<HistoryLogDto>> GetLastThreeHistoryAsync(string operationKey, string opName, string opSymbol)

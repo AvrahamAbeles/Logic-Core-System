@@ -202,3 +202,8 @@ $success-color: #28a745;
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.result-box h2, .equation {
+  direction: ltr;
+  unicode-bidi: bidi-override;
+  text-align: left;
+}

@@ -4,8 +4,8 @@
     {
         public string OperationName { get; set; }
         public string Symbol { get; set; } 
-        public double InputA { get; set; }
-        public double InputB { get; set; }
-        public double Result { get; set; }
+        public string InputA { get; set; }
+        public string InputB { get; set; }
+        public string Result { get; set; }
     }
 }
