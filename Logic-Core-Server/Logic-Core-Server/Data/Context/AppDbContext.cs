@@ -56,8 +56,8 @@
                 new OperationType
                 {
                     Key = "tax",
-                    Name = "חישוב כולל מס",
-                    Formula = "arg1 * 0.18",
+                    Name = "חישוב כולל מעמ",
+                    Formula = "arg1 * 1.18",
                     Symbol = "Tax %",
                     IsActive = true,
                     ValidationRegex = @"^-?\d+(\.\d+)?$",
