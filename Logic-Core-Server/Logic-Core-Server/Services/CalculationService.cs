@@ -62,8 +62,8 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
         {         
                 return interpreter.Eval(formula, new[]
                 {
-                    new Parameter("arg1", valA),
-                    new Parameter("arg2", valB)
+                    new Parameter("arg1", isNumA),
+                    new Parameter("arg2", isNumB)
 
                 });
 

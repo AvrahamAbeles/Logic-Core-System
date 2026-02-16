@@ -51,8 +51,9 @@
           @for (log of res.historyLog; track $index) {
           <li class="history-item">
             <span class="op-name">{{ log.operationName }}:</span>
-            <span class="equation" dir="ltr">
-              {{ log.inputA }} {{ log.symbol }} {{ log.inputB }} = {{ log.result }} </span>
+            <span class="equation" dir="ltr">{{ log.inputA }} {{ log.symbol }} </span>             
+            <span class="equation" dir="ltr">  {{ log.inputB }}</span>
+             <span class="equation" dir="ltr"> = {{ log.result }} </span>
           </li>
           }
         </ul>

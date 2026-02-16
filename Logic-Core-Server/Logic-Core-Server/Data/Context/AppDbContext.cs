@@ -57,7 +57,7 @@
                 {
                     Key = "vat",
                     Name = "חישוב כולל מעמ",
-                    Formula = "arg1 * 1.18",
+                    Formula = "arg1 * (1 + arg2 / 100)",
                     Symbol = "vat %",
                     IsActive = true,
                     ValidationRegex = @"^-?\d+(\.\d+)?$",

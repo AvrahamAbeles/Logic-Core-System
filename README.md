@@ -74,6 +74,6 @@ The engine can evaluate any valid C# expression stored as a string:
 
 **Division** : `arg1 / arg2 (Validation: ^-?\d+(\.\d+)?$)`
 
-**Tax Calculation** : `arg1 * 1.18  (Validation: ^-?\d+(\.\d+)?$)  Example: Input 100 -> Result 118.`
+**Total with Dynamic VAT**: `arg1 * (1 + arg2 / 100) (Validation: ^-?\d+(\.\d+)?$) - Example: Input 100, 17 -> Result 117 (Calculates Principal + 17%).`
 
 **String (Concatenation)** : `arg1 + arg2 (Input: "Hello", "World" -> Result: "HelloWorld")`
