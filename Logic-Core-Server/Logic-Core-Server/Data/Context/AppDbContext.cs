@@ -52,6 +52,16 @@
                      IsActive = true,
                      ValidationRegex = @"^-?\d+(\.\d+)?$",
                      ValidationMessage = "פעולה זו תומכת במספרים בלבד"
+                },
+                new OperationType
+                {
+                    Key = "tax",
+                    Name = "חישוב כולל מס",
+                    Formula = "arg1 * 0.18",
+                    Symbol = "Tax %",
+                    IsActive = true,
+                    ValidationRegex = @"^-?\d+(\.\d+)?$",
+                    ValidationMessage = "פעולה זו תומכת במספרים בלבד"
                 }
             );
         }
