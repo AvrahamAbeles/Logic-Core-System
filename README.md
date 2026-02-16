@@ -66,9 +66,13 @@ ng serve --o
 ### Dynamic Logic Example
 The engine can evaluate any valid C# expression stored as a string:
 
-**Add**: `arg1 + arg2`
+**Add** : `arg1 + arg2  - No validation. This allows the system to seamlessly handle both numeric addition (5 + 5 = 10) and string concatenation ("Hello" + "World" = "HelloWorld") using the same formula.  `
+**Subtraction** : `arg1 - arg2 (Validation: ^-?\d+(\.\d+)?$)`
 
-**Tax Calculation**: `arg1 * 0.17  (Validation: ^-?\d+(\.\d+)?$)`
+**Multiplication** :`arg1 * arg2 (Validation: ^-?\d+(\.\d+)?$)`
 
-**Complex Interest**: `arg1 * Math.Pow(1 + arg2, 12)`
-**String (Concatenation)**: `arg1 + arg2 (Input: "Hello", "World" -> Result: "HelloWorld")`
+**Division** : `arg1 / arg2 (Validation: ^-?\d+(\.\d+)?$)`
+
+**Tax Calculation** : `arg1 * 1.18  (Validation: ^-?\d+(\.\d+)?$)  Example: Input 100 -> Result 118.`
+
+**String (Concatenation)** : `arg1 + arg2 (Input: "Hello", "World" -> Result: "HelloWorld")`
