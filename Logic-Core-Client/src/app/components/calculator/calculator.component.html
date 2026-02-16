@@ -4,7 +4,7 @@
   <div class="form-grid">
     <div class="group">
       <label>Field A</label>
-      <input type="string" [ngModel]="fieldA()" (ngModelChange)="fieldA.set($event)">
+      <input type="text" [ngModel]="fieldA()" (ngModelChange)="fieldA.set($event)">
     </div>
 
     <div class="group">
@@ -18,7 +18,7 @@
 
     <div class="group">
       <label>Field B</label>
-      <input type="string" [ngModel]="fieldB()" (ngModelChange)="fieldB.set($event)">
+      <input type="text" [ngModel]="fieldB()" (ngModelChange)="fieldB.set($event)">
     </div>
 
     <button (click)="onCalculate()" [disabled]="isLoading()">

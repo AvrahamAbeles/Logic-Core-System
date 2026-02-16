@@ -4,14 +4,15 @@ A robust, extensible, and secure calculation platform designed for high-stakes o
 
 ## 🚀 Key Features
 
-* **Dynamic Formula Engine:** Utilizes **DynamicExpresso** to evaluate complex mathematical expressions stored in the database at runtime. This allows adding new products (e.g., Tax, Interest, Commissions) by simply updating a database record.
-* **Multi-Type Support:** The dynamic engine seamlessly detects and processes both standard mathematical operations and string manipulations (like text concatenation) without requiring code modifications.
+* **Dynamic Formula Engine:** Utilizes **DynamicExpresso** to evaluate complex mathematical expressions stored in the database at runtime. The engine uses **Parameterization** to ensure strict separation between logic and data, preventing Code Injection attacks.
+* **Smart Input Validation:** Features a database-driven validation system where each operation type can define its own **Regex rules** (e.g., allow only numbers for math operations). Invalid inputs are rejected with precise, user-friendly error messages before execution.
+* **Multi-Type Support:** The dynamic engine seamlessly detects and processes both standard mathematical operations and string manipulations (like text concatenation) by intelligently parsing inputs at runtime.
+* **Performance Optimization:** Database queries are optimized using **Composite Indexes** (`OperationKey` + `CreatedAt`) to ensure instant retrieval of historical logs even under heavy load.
 * **Security & Resilience:** Implemented **Rate Limiting** middleware to prevent DDoS attacks and ensure fair usage of server resources.
 * **Observability:** Integrated structured logging with **Serilog** (File/Console sinks) for advanced debugging and production-grade monitoring.
-* **Audit & Analytics :** Integrated **Calculation Logs** that track every operation, providing real-time "Monthly Usage" statistics and "Recent History" per operation type.
-* **Modern Frontend:** Built with **Angular 18**, utilizing **Standalone Components**, **Signals** for reactive state management, and the new **Control Flow** 
+* **Audit & Analytics:** Integrated **Calculation Logs** that track every operation, providing real-time "Monthly Usage" statistics and "Recent History" per operation type.
+* **Modern Frontend:** Built with **Angular 18**, utilizing **Standalone Components**, **Signals** for reactive state management, and the new **Control Flow**.
 * **Robust Backend:** **.NET 8 Web API** following Clean Architecture principles and utilizing Dependency Injection.
-* **Persistence:** SQL Server database integration using **Entity Framework Core (Code First)** with automated migrations.
 
 ## 🛠 Tech Stack
 
@@ -23,10 +24,10 @@ A robust, extensible, and secure calculation platform designed for high-stakes o
 
 ### Server Side (Backend)
 * **Framework:** .NET 8 Web API
-* **Engine:** DynamicExpresso (Expression Evaluation)
+* **Engine:** DynamicExpresso (Safe Expression Evaluation)
 * **Database:** Microsoft SQL Server
-* **ORM:** Entity Framework Core
-* **Middleware:** Custom Exception Handling & CORS
+* **ORM:** Entity Framework Core (Code First)
+* **Middleware:** Custom Exception Handling, Rate Limiting & CORS
 
 ## 🏗 Architecture & Design Principles
 
@@ -67,7 +68,7 @@ The engine can evaluate any valid C# expression stored as a string:
 
 **Add**: `arg1 + arg2`
 
-**Tax Calculation**: `arg1 * 0.17`
+**Tax Calculation**: `arg1 * 0.17  (Validation: ^-?\d+(\.\d+)?$)`
 
 **Complex Interest**: `arg1 * Math.Pow(1 + arg2, 12)`
 **String (Concatenation)**: `arg1 + arg2 (Input: "Hello", "World" -> Result: "HelloWorld")`
