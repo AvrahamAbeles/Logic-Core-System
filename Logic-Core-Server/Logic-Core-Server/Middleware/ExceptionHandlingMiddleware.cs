@@ -17,7 +17,7 @@ public class ExceptionHandlingMiddleware(RequestDelegate next)
             var errorTitle = "Internal Server Error";
             var message = "אירעה שגיאה פנימית בשרת. נא לפנות לתמיכה הטכנית.";
 
-            if (ex is InvalidOperationException)
+            if (ex is InvalidOperationException || ex is ArgumentException)
             {
                 statusCode = HttpStatusCode.BadRequest; 
                 message = ex.Message; 

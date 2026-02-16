@@ -12,7 +12,9 @@ namespace Logic_Core_Server.Data.Entities
 
         [Required]
         public string Formula { get; set; }
-        public string Symbol { get; set; } // שדה חדש לסימן המתמטי
-        public bool IsActive { get; set; } = true; 
+        public string Symbol { get; set; } 
+        public bool IsActive { get; set; } = true;
+        public string? ValidationRegex { get; set; } 
+        public string? ValidationMessage { get; set; } 
     }
 }

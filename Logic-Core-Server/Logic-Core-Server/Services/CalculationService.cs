@@ -1,5 +1,6 @@
 ﻿using Azure;
 using DynamicExpresso;
+using System.Text.RegularExpressions;
 
 namespace Logic_Core_Server.Services;
 
@@ -11,6 +12,22 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
             .FirstOrDefaultAsync(op => op.Key == operationKey && op.IsActive);
 
         if (operation == null) throw new KeyNotFoundException("פעולה לא נמצאה");
+
+        if (!string.IsNullOrEmpty(operation.ValidationRegex))
+        {
+            if (!Regex.IsMatch(a, operation.ValidationRegex))
+            {
+                throw new ArgumentException($"Error in field A: {operation.ValidationMessage ?? "קלט לא תקין"}");
+            }
+
+            if (!Regex.IsMatch(b, operation.ValidationRegex))
+            {
+                throw new ArgumentException($"Error in field B: {operation.ValidationMessage ?? "קלט לא תקין"}");
+            }
+        }
+
+
+
 
         var lastThree = await GetLastThreeHistoryAsync(operationKey, operation.Name, operation.Symbol);
         int monthlyCount = await GetMonthlyUsageCountAsync(operationKey);
@@ -37,16 +54,12 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
 
     private object ExecuteDynamicCalculation(string formula, string a, string b)
     {
-        // שלב 1: ננסה לזהות אם מדובר במספרים
-        bool isNumA = double.TryParse(a, out double valA);
-        bool isNumB = double.TryParse(b, out double valB);
+        object isNumA = double.TryParse(a, out double valA) ? valA : a;
+        object isNumB = double.TryParse(b, out double valB) ? valB : b;
 
 
         try
-        {
-            if (isNumA && isNumB)
-            {
-
+        {         
                 return interpreter.Eval(formula, new[]
                 {
                     new Parameter("arg1", valA),
@@ -54,16 +67,8 @@ public class CalculationService(AppDbContext context, Interpreter interpreter) :
 
                 });
 
-            }
-
-            else
-            {
-                 return interpreter.Eval(formula, new[]
-                 {
-                    new Parameter("arg1", a),
-                    new Parameter("arg2", b)
-                 });
-            }
+  
+            
         }
         catch (Exception ex)
         {

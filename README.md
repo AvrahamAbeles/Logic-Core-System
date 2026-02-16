@@ -47,7 +47,7 @@ The solution is a textbook implementation of the Open/Closed Principle:
 ### 1. Database Setup
 * Update the connection string in `appsettings.json`  and run:
  ```bash
-cd Logic-Core-Server
+cd Logic-Core-Server/Logic-Core-Server
 dotnet ef database update
 ```
 ### 2. Run the Backend
@@ -70,3 +70,4 @@ The engine can evaluate any valid C# expression stored as a string:
 **Tax Calculation**: `arg1 * 0.17`
 
 **Complex Interest**: `arg1 * Math.Pow(1 + arg2, 12)`
+**String (Concatenation)**: `arg1 + arg2 (Input: "Hello", "World" -> Result: "HelloWorld")`

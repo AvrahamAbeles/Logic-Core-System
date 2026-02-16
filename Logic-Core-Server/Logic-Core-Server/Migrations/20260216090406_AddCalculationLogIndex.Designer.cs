@@ -4,6 +4,7 @@ using Logic_Core_Server.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logic_Core_Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260216090406_AddCalculationLogIndex")]
+    partial class AddCalculationLogIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,12 +79,6 @@ namespace Logic_Core_Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ValidationMessage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ValidationRegex")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Key");
 
                     b.ToTable("Operations");
@@ -101,9 +98,7 @@ namespace Logic_Core_Server.Migrations
                             Formula = "arg1 - arg2",
                             IsActive = true,
                             Name = "חיסור",
-                            Symbol = "-",
-                            ValidationMessage = "פעולה זו תומכת במספרים בלבד",
-                            ValidationRegex = "^-?\\d+(\\.\\d+)?$"
+                            Symbol = "-"
                         },
                         new
                         {
@@ -111,9 +106,7 @@ namespace Logic_Core_Server.Migrations
                             Formula = "arg1 * arg2",
                             IsActive = true,
                             Name = "כפל",
-                            Symbol = "*",
-                            ValidationMessage = "פעולה זו תומכת במספרים בלבד",
-                            ValidationRegex = "^-?\\d+(\\.\\d+)?$"
+                            Symbol = "*"
                         },
                         new
                         {
@@ -121,9 +114,7 @@ namespace Logic_Core_Server.Migrations
                             Formula = "arg1 / arg2",
                             IsActive = true,
                             Name = "חילוק",
-                            Symbol = "/",
-                            ValidationMessage = "פעולה זו תומכת במספרים בלבד",
-                            ValidationRegex = "^-?\\d+(\\.\\d+)?$"
+                            Symbol = "/"
                         });
                 });
 #pragma warning restore 612, 618

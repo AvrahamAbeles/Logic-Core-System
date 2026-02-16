@@ -13,32 +13,46 @@
         {
             base.OnModelCreating(modelBuilder);
 
-          
-            modelBuilder.Entity<OperationType>().HasData(
+        modelBuilder.Entity<CalculationLog>()
+            .HasIndex(l => new { l.OperationKey, l.CreatedAt });
+
+        modelBuilder.Entity<OperationType>().HasData(
                 new OperationType {
                     Key = "add",
                     Name = "חיבור",
                     Formula = "arg1 + arg2",
                     Symbol = "+",
-                    IsActive = true },
+                    IsActive = true ,
+                    ValidationRegex = null,
+                    ValidationMessage = null
+                },
                 new OperationType { 
                      Key = "sub",
                      Name = "חיסור",
                      Formula = "arg1 - arg2",
                      Symbol = "-",
-                     IsActive = true },
+                     IsActive = true,
+                     ValidationRegex = @"^-?\d+(\.\d+)?$",
+                     ValidationMessage = "פעולה זו תומכת במספרים בלבד"
+                },
                 new OperationType {
                      Key = "mul",
                      Name = "כפל",
                      Formula = "arg1 * arg2",
                      Symbol = "*",
-                     IsActive = true },
+                     IsActive = true ,
+                     ValidationRegex = @"^-?\d+(\.\d+)?$",
+                     ValidationMessage = "פעולה זו תומכת במספרים בלבד"
+                },
                 new OperationType { 
                      Key = "div",
                      Name = "חילוק",
                      Formula = "arg1 / arg2",
                      Symbol = "/",
-                     IsActive = true }
+                     IsActive = true,
+                     ValidationRegex = @"^-?\d+(\.\d+)?$",
+                     ValidationMessage = "פעולה זו תומכת במספרים בלבד"
+                }
             );
         }
     }
