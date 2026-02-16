@@ -67,6 +67,7 @@ ng serve --o
 The engine can evaluate any valid C# expression stored as a string:
 
 **Add** : `arg1 + arg2  - No validation. This allows the system to seamlessly handle both numeric addition (5 + 5 = 10) and string concatenation ("Hello" + "World" = "HelloWorld") using the same formula.  `
+
 **Subtraction** : `arg1 - arg2 (Validation: ^-?\d+(\.\d+)?$)`
 
 **Multiplication** :`arg1 * arg2 (Validation: ^-?\d+(\.\d+)?$)`
