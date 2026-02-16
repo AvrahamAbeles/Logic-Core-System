@@ -55,10 +55,10 @@
                 },
                 new OperationType
                 {
-                    Key = "tax",
+                    Key = "vat",
                     Name = "חישוב כולל מעמ",
                     Formula = "arg1 * 1.18",
-                    Symbol = "Tax %",
+                    Symbol = "vat %",
                     IsActive = true,
                     ValidationRegex = @"^-?\d+(\.\d+)?$",
                     ValidationMessage = "פעולה זו תומכת במספרים בלבד"
